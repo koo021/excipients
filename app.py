@@ -301,6 +301,11 @@ if st.button("保存为eCTD格式 (Save to eCTD Format)"):
         
         st.success(f"Data saved to {fixed_json_filename} under key '{key}'.")
         
+        # Download current JSON only
+        current_data = {key: ectd_data}
+        json_bytes = json.dumps(current_data, ensure_ascii=False, indent=4).encode('utf-8')
+        st.download_button("下载当前JSON", json_bytes, file_name=f"{key}.json", mime="application/json")
+        
         if generate_word:
             if not manufacturer_spec:
                 manufacturer_spec = excipient_name if excipient_name else "default"
